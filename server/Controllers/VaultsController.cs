@@ -8,12 +8,13 @@ public class VaultsController : ControllerBase
 {
     private readonly VaultsService _VaultsService;
     private readonly Auth0Provider _auth0;
-    public VaultsController(VaultsService vaultsService, Auth0Provider auth0)
+    private readonly VaultKeepsService _VaultKeepsService;
+    public VaultsController(VaultsService vaultsService, Auth0Provider auth0, VaultKeepsService vaultKeepsService)
     {
         _VaultsService = vaultsService;
         _auth0 = auth0;
+        _VaultKeepsService = vaultKeepsService;
     }
-
     // Get Vault By Id
     [HttpGet("{vaultId}")]
     public async Task<ActionResult<Vault>> GetVaultById(int vaultId)
@@ -29,7 +30,6 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-
     // Create Vault
     [Authorize]
     [HttpPost]
@@ -47,7 +47,6 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-
     // Edit Vault
     [Authorize]
     [HttpPut("{vaultId}")]
@@ -65,7 +64,6 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-
     // Delete Vault
     [Authorize]
     [HttpDelete("{vaultId}")]
@@ -77,6 +75,21 @@ public class VaultsController : ControllerBase
             string userId = userInfo.Id;
             string message = _VaultsService.DeleteVault(vaultId, userId);
             return Ok(message);
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+    // Get Keeps In Vault
+    [HttpGet("{vaultId}/keeps")]
+    public async Task<ActionResult<List<VKResponse>>> GetKeepsInVault(int vaultId)
+    {
+        try
+        {
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+            List<VKResponse> keepsInVault = _VaultKeepsService.GetKeepsInVault(vaultId, userInfo?.Id);
+            return Ok(keepsInVault);
         }
         catch (Exception error)
         {
