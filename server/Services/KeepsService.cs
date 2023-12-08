@@ -49,12 +49,15 @@ public class KeepsService
     }
     internal string DeleteKeep(int keepId, string userId)
     {
-        Keep keep = GetKeepById(keepId);
-        if (keep.CreatorId != userId)
+        Keep fetchedKeep = GetKeepById(keepId);
+        if (fetchedKeep.CreatorId != userId)
         {
             throw new Exception("You are not authorized to delete another users keep.");
         }
-        _KeepsRepository.DeleteKeep(keepId);
-        return $"{keep.Name} has been deleted from the database.";
+        else
+        {
+            _KeepsRepository.DeleteKeep(keepId);
+            return $"{fetchedKeep.Name} has been deleted from the database.";
+        }
     }
 }
