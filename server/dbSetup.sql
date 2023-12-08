@@ -1,8 +1,31 @@
-CREATE TABLE IF NOT EXISTS accounts(
-  id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
-  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
-  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
-  name varchar(255) COMMENT 'User Name',
-  email varchar(255) COMMENT 'User Email',
-  picture varchar(255) COMMENT 'User Picture'
-) default charset utf8 COMMENT '';
+-- Account Commands
+
+CREATE TABLE
+    IF NOT EXISTS accounts(
+        id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
+        name varchar(255) COMMENT 'User Name',
+        email varchar(255) COMMENT 'User Email',
+        picture varchar(255) COMMENT 'User Picture'
+    ) default charset utf8 COMMENT '';
+
+-- Keep Commands
+
+CREATE TABLE
+    IF NOT EXISTS keeps(
+        id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        name VARCHAR(300) NOT NULL,
+        description VARCHAR(3000) NOT NULL,
+        img VARCHAR(2000) NOT NULL,
+        views INT NOT NULL DEFAULT 0,
+        kept INT NOT NULL DEFAULT 0,
+        creatorId VARCHAR(255) NOT NULL,
+        FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
+    ) default charset utf8;
+
+SELECT * FROM keeps;
+
+DROP TABLE keeps;
