@@ -1,3 +1,5 @@
+
+
 namespace Keepr.Repositories;
 
 public class KeepsRepository
@@ -69,5 +71,23 @@ public class KeepsRepository
     {
         string sql = @"DELETE FROM keeps WHERE id = @keepId LIMIT 1;";
         _db.Execute(sql, new { keepId });
+    }
+
+    internal void UpdateKeptCount(Keep fetchedKeep)
+    {
+        string sql = @"
+        UPDATE keeps
+        SET kept = @Kept
+        WHERE id = @Id;";
+        _db.Execute(sql, fetchedKeep);
+    }
+
+    internal void IncrementViewsCount(Keep keepData)
+    {
+        string sql = @"
+        UPDATE keeps
+        SET views = @Views
+        WHERE id = @Id;";
+        _db.Execute(sql, keepData);
     }
 }

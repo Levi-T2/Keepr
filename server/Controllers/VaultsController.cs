@@ -96,4 +96,5 @@ public class VaultsController : ControllerBase
             return BadRequest(error.Message);
         }
     }
+
 }

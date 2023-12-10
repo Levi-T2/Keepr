@@ -1,5 +1,6 @@
 
 
+
 namespace Keepr.Services;
 
 public class VaultsService
@@ -62,5 +63,10 @@ public class VaultsService
             _VaultsRepository.DeleteVault(vaultId);
             return $"{fetchedVault.Name} has been deleted from the dataBase";
         }
+    }
+    internal List<Vault> GetVaultsForAccount(string accountId)
+    {
+        List<Vault> vaultList = _VaultsRepository.GetVaultsForAccount(accountId);
+        return vaultList;
     }
 }

@@ -7,10 +7,14 @@ public class VaultKeepsService
 {
     private readonly VaultKeepsRepository _VaultKeepsRepository;
     private readonly VaultsService _VaultsService;
-    public VaultKeepsService(VaultKeepsRepository vaultKeepsRepository, VaultsService vaultsService)
+    private readonly KeepsService _KeepsService;
+    private readonly KeepsRepository _KeepsRepository;
+    public VaultKeepsService(VaultKeepsRepository vaultKeepsRepository, VaultsService vaultsService, KeepsService keepsService, KeepsRepository keepsRepository)
     {
         _VaultKeepsRepository = vaultKeepsRepository;
         _VaultsService = vaultsService;
+        _KeepsService = keepsService;
+        _KeepsRepository = keepsRepository;
     }
     internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
     {
@@ -22,6 +26,8 @@ public class VaultKeepsService
         else
         {
             VaultKeep vaultKeep = _VaultKeepsRepository.CreateVaultKeep(vaultKeepData);
+            int keepId = vaultKeep.KeepId;
+            IncrementKeptCount(keepId);
             return vaultKeep;
         }
     }
@@ -48,8 +54,27 @@ public class VaultKeepsService
         {
             throw new Exception("You lack the authorization to delete this VaultKeep.");
         }
-        _VaultKeepsRepository.DeleteVaultKeep(vaultKeepId);
-        return "The vaultKeep has been removed from the database.";
+        else
+        {
+            int keepId = fetchedVaultKeep.KeepId;
+            DecreaseKeptCount(keepId);
+            _VaultKeepsRepository.DeleteVaultKeep(vaultKeepId);
+            return "The vaultKeep has been removed from the database.";
+        }
+    }
 
+    internal Keep IncrementKeptCount(int keepId)
+    {
+        Keep fetchedKeep = _KeepsService.GetKeepById(keepId);
+        fetchedKeep.Kept++;
+        _KeepsRepository.UpdateKeptCount(fetchedKeep);
+        return fetchedKeep;
+    }
+    internal void DecreaseKeptCount(int keepId)
+    {
+        Keep fetchedKeep = _KeepsService.GetKeepById(keepId);
+        fetchedKeep.Kept--;
+        _KeepsRepository.UpdateKeptCount(fetchedKeep);
+        return;
     }
 }

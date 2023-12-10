@@ -25,6 +25,8 @@ public class KeepsService
         }
         else
         {
+            keep.Views++;
+            IncrementViewsCount(keep);
             return keep;
         }
     }
@@ -59,5 +61,10 @@ public class KeepsService
             _KeepsRepository.DeleteKeep(keepId);
             return $"{fetchedKeep.Name} has been deleted from the database.";
         }
+    }
+    internal Keep IncrementViewsCount(Keep keepData)
+    {
+        _KeepsRepository.IncrementViewsCount(keepData);
+        return keepData;
     }
 }

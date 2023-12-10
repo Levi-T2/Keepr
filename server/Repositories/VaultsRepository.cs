@@ -58,4 +58,10 @@ public class VaultsRepository
         string sql = @"DELETE FROM vaults WHERE id = @vaultId LIMIT 1;";
         _db.Execute(sql, new { vaultId });
     }
+    internal List<Vault> GetVaultsForAccount(string accountId)
+    {
+        string sql = @"SELECT * FROM vaults WHERE creatorId = @accountId;";
+        List<Vault> vaultList = _db.Query<Vault>(sql, new { accountId }).ToList();
+        return vaultList;
+    }
 }
