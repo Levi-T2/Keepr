@@ -12,7 +12,13 @@ class KeepsService {
     }
     async CreateKeep(keepData) {
         const res = await api.post(`api/keeps`, keepData)
-        logger.log(res.data)
+        const newKeep = new Keep(res.data)
+        AppState.keeps.push(newKeep)
+    }
+    async DeleteKeep(keepId) {
+        const keepIndex = AppState.keeps.findIndex((keep) => keep.id == keepId)
+        const res = await api.delete(`api/keeps/${keepId}`)
+        AppState.keeps.splice(keepIndex, 1)
     }
 }
 

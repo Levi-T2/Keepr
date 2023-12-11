@@ -7,9 +7,9 @@
   </main>
 
   <!-- Modals -->
-
   <KeepDetailsModal />
   <CreateKeepModal />
+  <CreateVaultModal />
 </template>
 
 <script>
@@ -18,6 +18,7 @@ import { AppState } from './AppState'
 import Neonav from './components/Neonav.vue'
 import KeepDetailsModal from './components/KeepDetailsModal.vue'
 import CreateKeepModal from './components/CreateKeepModal.vue'
+import CreateVaultModal from './components/CreateVaultModal.vue'
 
 export default {
   setup() {
@@ -25,7 +26,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Neonav, KeepDetailsModal, CreateKeepModal }
+  components: { Neonav, KeepDetailsModal, CreateKeepModal, CreateVaultModal }
 }
 </script>
 <style lang="scss">

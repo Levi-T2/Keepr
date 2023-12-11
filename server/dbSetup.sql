@@ -32,6 +32,8 @@ SELECT * FROM keeps;
 
 DROP TABLE keeps;
 
+DELETE FROM keeps LIMIT 10;
+
 -- Vault Commands
 
 CREATE TABLE
@@ -50,6 +52,8 @@ CREATE TABLE
 SELECT * FROM vaults;
 
 DROP TABLE vaults;
+
+DELETE FROM vaults LIMIT 10;
 
 -- VaultKeep Commands
 

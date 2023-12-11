@@ -1,16 +1,18 @@
 <template>
     <section class="row">
-        <div role="button" @click="OpenKeepModal(keep)" class="col-12 p-2">
+        <div class="col-12 p-2">
             <div class="img-container keep-card">
-                <img :src="keep.img" alt="Keep Image" class="img-fluid rounded">
-                <div class="bottom-left">
+                <img role="button" @click="OpenKeepModal(keep)" :src="keep.img" alt="Keep Image" class="img-fluid rounded">
+                <div v-if="account.id == keep.creatorId" @click="DeleteKeep(keep.id)" class="top-right">
+                    <button class="btn btn-danger"><i class="mdi mdi-close"></i></button>
+                </div>
+                <div role="button" @click="OpenKeepModal(keep)" class="bottom-left">
                     <p class="txt-bg">{{ keep.name }}</p>
                 </div>
-                <div class="bottom-right">
+                <div role="button" @click="OpenKeepModal(keep)" class="bottom-right">
                     <img :src="keep.creator.picture" alt="Creator Avatar" class="creator-img">
                 </div>
             </div>
-
         </div>
     </section>
 </template>
@@ -22,17 +24,32 @@ import { computed, reactive, onMounted } from 'vue';
 import { Keep } from '../models/Keep';
 import Pop from '../utils/Pop';
 import { Modal } from 'bootstrap';
+import { logger } from '../utils/Logger';
+import { keepsService } from '../services/KeepsService';
 export default {
     props: {
         keep: { type: Keep, required: true }
     },
-    setup(props) {
+    setup() {
         return {
+            account: computed(() => AppState.account),
             OpenKeepModal(keepData) {
                 try {
                     AppState.activeKeep = null
                     AppState.activeKeep = keepData
                     Modal.getOrCreateInstance("#keepDetails").show()
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            async DeleteKeep(keepId) {
+                try {
+                    const wantsToDelete = await Pop.confirm(`Are you sure you want to delete this keep?`)
+                    if (!wantsToDelete) {
+                        return
+                    } else {
+                        await keepsService.DeleteKeep(keepId)
+                    }
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -80,6 +97,12 @@ export default {
     font-weight: bold;
 }
 
+// .keep-btn {
+//     position: absolute;
+//     z-index: 1;
+//     width: 3rem;
+// }
+
 // SECTION Css for img container
 
 .img-container {
@@ -97,6 +120,12 @@ export default {
     position: absolute;
     bottom: 8px;
     right: 16px;
+}
+
+.top-right {
+    position: absolute;
+    top: 4px;
+    right: 8px;
 }
 
 // !SECTION

@@ -25,7 +25,7 @@
                             <div id="keepHelp" class="form-text">This must be a url!</div>
                         </div>
                         <div class="text-end">
-                            <button class="btn btn-success" type="submit">Create</button>
+                            <button class="btn btn-success" type="submit">Create Keep</button>
                         </div>
                     </form>
                 </div>

@@ -3,7 +3,9 @@
         <div class="container-fluid">
             <section class="row align-items-center">
                 <div class="col-2">
-                    <p type="button" role="button" class="mb-0">Home</p>
+                    <RouterLink :to="{ name: 'Home' }">
+                        <p type="button" role="button" class="mb-0">Home</p>
+                    </RouterLink>
                 </div>
                 <div class="col-2">
                     <div class="dropdown">
@@ -14,7 +16,8 @@
                         <ul class="dropdown-menu">
                             <li data-bs-toggle="modal" data-bs-target="#createKeep" role="button"><a
                                     class="dropdown-item">Create Keep</a></li>
-                            <li role="button"><a class="dropdown-item">Create Vault</a></li>
+                            <li data-bs-toggle="modal" data-bs-target="#createVault" role="button"><a
+                                    class="dropdown-item">Create Vault</a></li>
                         </ul>
                     </div>
                 </div>
