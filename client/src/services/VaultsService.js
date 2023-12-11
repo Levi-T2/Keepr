@@ -5,17 +5,16 @@ import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 class VaultsService {
-    async GetVaultsForAccount() {
-        const res = await api.get(`account/vaults`)
-        const newVaults = res.data.map((vault) => new Vault(vault))
-        AppState.vaults = newVaults
-        logger.log(`[VAULTS SERVICE] Vaults In AppState =>`, AppState.vaults)
-    }
     async GetKeepsInVault(vaultId) {
         const res = await api.get(`api/vaults/${vaultId}/keeps`)
         const newVaultKeeps = res.data.map((vaultKeep) => new KeepInVault(vaultKeep))
         AppState.keepsInVault = newVaultKeeps
         logger.log(`[VAULT SERVICE] VaultKeeps In AppState =>`, AppState.keepsInVault)
+    }
+    async GetVaultById(vaultId) {
+        const res = await api.get(`api/vaults/${vaultId}`)
+        AppState.activeVault = new Vault(res.data)
+        logger.log(`[VAULT SERVICE] Vault In AppState =>`, AppState.activeVault)
     }
     async CreateVault(vaultData) {
         const res = await api.post(`api/vaults`, vaultData)

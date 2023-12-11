@@ -12,12 +12,12 @@
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-lg-end dropdown-menu-start p-0" aria-labelledby="authDropdown">
-          <div class="list-group">
-            <router-link :to="{ name: 'Account' }">
+          <div v-if="account.id" class="list-group">
+            <RouterLink :to="{ name: 'Account', params: { accountId: account.id || user.id } }">
               <div class="list-group-item dropdown-item list-group-item-action">
                 Manage Account
               </div>
-            </router-link>
+            </RouterLink>
             <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
               <i class="mdi mdi-logout"></i>
               logout
@@ -33,19 +33,21 @@
 import { computed } from 'vue'
 import { AppState } from '../AppState'
 import { AuthService } from '../services/AuthService'
+import { RouterLink } from 'vue-router'
 export default {
   setup() {
     return {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       async login() {
-        AuthService.loginWithPopup()
+        AuthService.loginWithPopup();
       },
       async logout() {
-        AuthService.logout({ returnTo: window.location.origin })
+        AuthService.logout({ returnTo: window.location.origin });
       }
-    }
-  }
+    };
+  },
+  components: { RouterLink }
 }
 </script>
 

@@ -9,8 +9,10 @@
                 <div role="button" @click="OpenKeepModal(keep)" class="bottom-left">
                     <p class="txt-bg">{{ keep.name }}</p>
                 </div>
-                <div role="button" @click="OpenKeepModal(keep)" class="bottom-right">
-                    <img :src="keep.creator.picture" alt="Creator Avatar" class="creator-img">
+                <div v-if="keep.creator" role="button" class="bottom-right">
+                    <RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }" title="To Profile Page">
+                        <img :src="keep.creator.picture" alt="Creator Avatar" class="creator-img">
+                    </RouterLink>
                 </div>
             </div>
         </div>
@@ -26,6 +28,9 @@ import Pop from '../utils/Pop';
 import { Modal } from 'bootstrap';
 import { logger } from '../utils/Logger';
 import { keepsService } from '../services/KeepsService';
+import { RouterLink } from 'vue-router';
+import { Account } from '../models/Account';
+import { userService } from '../services/UserService';
 export default {
     props: {
         keep: { type: Keep, required: true }
@@ -35,28 +40,32 @@ export default {
             account: computed(() => AppState.account),
             OpenKeepModal(keepData) {
                 try {
-                    AppState.activeKeep = null
-                    AppState.activeKeep = keepData
-                    Modal.getOrCreateInstance("#keepDetails").show()
-                } catch (error) {
-                    Pop.error(error)
+                    AppState.activeKeep = null;
+                    AppState.activeKeep = keepData;
+                    Modal.getOrCreateInstance("#keepDetails").show();
+                }
+                catch (error) {
+                    Pop.error(error);
                 }
             },
             async DeleteKeep(keepId) {
                 try {
-                    const wantsToDelete = await Pop.confirm(`Are you sure you want to delete this keep?`)
+                    const wantsToDelete = await Pop.confirm(`Are you sure you want to delete this keep?`);
                     if (!wantsToDelete) {
-                        return
-                    } else {
-                        await keepsService.DeleteKeep(keepId)
+                        return;
                     }
-                } catch (error) {
-                    Pop.error(error)
+                    else {
+                        await keepsService.DeleteKeep(keepId);
+                    }
                 }
-            }
+                catch (error) {
+                    Pop.error(error);
+                }
+            },
             // keepCreatorImg: computed(() => `url(${props.keep.creator.picture})`)
-        }
-    }
+        };
+    },
+    components: { RouterLink }
 };
 </script>
 
@@ -124,8 +133,8 @@ export default {
 
 .top-right {
     position: absolute;
-    top: 4px;
-    right: 8px;
+    top: 0px;
+    right: 0px;
 }
 
 // !SECTION

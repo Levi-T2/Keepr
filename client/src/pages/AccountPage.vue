@@ -1,5 +1,7 @@
 <template>
-  <AccountDetails :account="account" />
+  <div v-if="account">
+    <AccountDetails :account="account" />
+  </div>
 </template>
 
 <script>

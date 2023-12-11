@@ -9,5 +9,6 @@ export class Vault {
         this.description = data.description
         this.img = data.img
         this.isPrivate = data.isPrivate
+        this.creator = data.creator
     }
 }

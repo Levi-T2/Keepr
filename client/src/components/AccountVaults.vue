@@ -1,6 +1,6 @@
 <template>
     <section class="row">
-        <div class="vault-btn-position">
+        <div v-if="account.id == vault.creatorId" class="delete-btn-position">
             <button @click="DeleteVault(vault.id)" class="vault-btn"><i class="mdi mdi-close-thick"></i></button>
         </div>
         <RouterLink class="p-1" :to="{ name: 'VaultDetails', params: { vaultId: vault.id } }" title="See Vault...">
@@ -23,6 +23,7 @@ import { Vault } from '../models/Vault';
 import { RouterLink } from 'vue-router';
 import Pop from '../utils/Pop';
 import { vaultsService } from '../services/VaultsService';
+import { AppState } from '../AppState';
 
 export default {
     props: {
@@ -30,6 +31,7 @@ export default {
     },
     setup(props) {
         return {
+            account: computed(() => AppState.account),
             vaultImg: computed(() => `url(${props.vault.img})`),
             async DeleteVault(vaultId) {
                 try {
@@ -51,7 +53,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.vault-btn-position {
+.delete-btn-position {
     display: flex;
     justify-content: end;
     margin-left: 0.8rem;

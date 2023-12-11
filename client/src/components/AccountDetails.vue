@@ -9,14 +9,12 @@
                         <img :src="account.picture" alt="Account Picture" class="account-img">
                     </div>
                 </div>
-
                 <div class="col-12 mt-5 p-0">
                     <div class="text-center">
                         <p>{{ account.name }}</p>
-                        <p>Email: {{ account.email }}</p>
+                        <p v-if="account.email">Email: {{ account.email }}</p>
                     </div>
                 </div>
-
             </div>
             <section v-if="vaults.length" class="row">
                 <div class="text-center">
@@ -24,6 +22,22 @@
                 </div>
                 <div v-for="vault in vaults" :key="vault.id" class="col-12 col-md-4 col-lg-3 mt-2">
                     <AccountVaults :vault="vault" />
+                </div>
+            </section>
+            <section v-else class="row">
+                <div class="col-12">
+                    <div class="text-center mt-1">
+                        <p class="mb-0 fs-3">Loading ...</p>
+                    </div>
+                </div>
+            </section>
+            <section v-if="keeps.length" class="row">
+                <div class="text-center">
+                    <p class="mb-0 fs-3">Keeps</p>
+                </div>
+                <div v-for="keep in keeps" :key="keep.id" class="col-12 col-md-4 col-lg-3 mt-2">
+                    <!-- <AccountKeeps :keep="keep" /> -->
+                    <KeepCard :keep="keep" />
                 </div>
             </section>
             <section v-else class="row">
@@ -43,29 +57,61 @@ import { AppState } from '../AppState';
 import { computed, onMounted } from 'vue';
 import { Account } from '../models/Account';
 import AccountVaults from '../components/AccountVaults.vue'
-import { vaultsService } from '../services/VaultsService'
 import Pop from '../utils/Pop';
+import { logger } from '../utils/Logger';
+import { useRoute } from 'vue-router';
+import { userService } from '../services/UserService'
+import KeepCard from './KeepCard.vue';
 
 export default {
     props: {
         account: { type: Account, required: true }
     },
     setup() {
+        const route = useRoute()
         onMounted(() => {
-            GetVaultsForAccount();
+            GetVaultsForUser();
+            GetKeepsForUser();
         })
-        async function GetVaultsForAccount() {
+        async function GetVaultsForUser() {
             try {
-                await vaultsService.GetVaultsForAccount()
+                AppState.vaults = []
+                const accountId = route.params.accountId
+                if (route.path == `/account/${accountId}`) {
+                    const endpointUrl = `account/vaults`
+                    await userService.GetVaultsForUser(endpointUrl)
+                } else {
+                    const profileId = route.params.profileId
+                    const endpointUrl = `api/profiles/${profileId}/vaults`
+                    await userService.GetVaultsForUser(endpointUrl)
+                }
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
+        async function GetKeepsForUser() {
+            try {
+                AppState.keepsForUser = []
+                const accountId = route.params.accountId
+                if (route.path == `/account/${accountId}`) {
+                    const endpointUrl = `api/profiles/${accountId}/keeps`
+                    await userService.GetKeepsForUser(endpointUrl)
+                } else {
+                    const profileId = route.params.profileId
+                    const endpointUrl = `api/profiles/${profileId}/keeps`
+                    await userService.GetKeepsForUser(endpointUrl)
+                }
             } catch (error) {
                 Pop.error(error)
             }
         }
         return {
+            route,
             vaults: computed(() => AppState.vaults),
+            keeps: computed(() => AppState.keepsForUser),
         }
     },
-    components: { AccountVaults }
+    components: { AccountVaults, KeepCard }
 };
 </script>
 

@@ -19,6 +19,7 @@ class KeepsService {
         const keepIndex = AppState.keeps.findIndex((keep) => keep.id == keepId)
         const res = await api.delete(`api/keeps/${keepId}`)
         AppState.keeps.splice(keepIndex, 1)
+        AppState.keepsForUser.splice(keepIndex, 1)
     }
 }
 
