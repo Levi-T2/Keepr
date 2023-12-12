@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="editAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editAccount" tabindex="-1" aria-labelledby="EditAccountModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -24,8 +24,8 @@
                                 maxlength="255">
                         </div>
                         <div class="my-1">
-                            <label for="accountBio" class="form-label">Cover Img</label>
-                            <input v-model="editable.coverImg" type="url" class="form-control" id="accountBio"
+                            <label for="accountCoverImg" class="form-label">Cover Img</label>
+                            <input v-model="editable.coverImg" type="url" class="form-control" id="accountCoverImg"
                                 maxlength="2000">
                         </div>
                         <div class="my-1">

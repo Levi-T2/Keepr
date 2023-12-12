@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="createVault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="createVault" tabindex="-1" aria-labelledby="CreateVaultModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -47,24 +47,29 @@ import Pop from '../utils/Pop';
 import { logger } from '../utils/Logger';
 import { vaultsService } from '../services/VaultsService';
 import { Modal } from 'bootstrap';
+import { useRouter } from 'vue-router';
 
 export default {
     setup() {
         const editable = ref({})
+        const router = useRouter();
         return {
             editable,
+            router,
             async CreateVault() {
                 try {
                     const vaultData = editable.value
                     if (vaultData.isPrivate == null) {
                         vaultData.isPrivate = false
-                        await vaultsService.CreateVault(vaultData)
+                        const vault = await vaultsService.CreateVault(vaultData)
                         Modal.getOrCreateInstance("#createVault").hide()
                         editable.value = {}
+                        router.push({ name: 'VaultDetails', params: { vaultId: vault.id } })
                     } else {
                         await vaultsService.CreateVault(vaultData)
-                        Modal.getOrCreateInstance("#createVault").hide()
+                        const vault = Modal.getOrCreateInstance("#createVault").hide()
                         editable.value = {}
+                        router.push({ name: 'VaultDetails', params: { vaultId: vault.id } })
                     }
                 } catch (error) {
                     Pop.error(error)

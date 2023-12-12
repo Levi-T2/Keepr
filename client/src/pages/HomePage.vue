@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
-    <section v-if="keeps.length" class="row">
-      <div v-for="keep in keeps" class="col-12 col-md-4 col-lg-3">
+    <section v-if="keeps.length" class="row" data-masonry>
+      <div v-for="keep in keeps" class="col-6 col-md-4 col-lg-3">
         <KeepCard :keep="keep" />
       </div>
     </section>
@@ -20,6 +20,7 @@ import { keepsService } from '../services/KeepsService';
 import { AppState } from '../AppState';
 import KeepCard from '../components/KeepCard.vue';
 import { accountService } from '../services/AccountService';
+import masonry from 'masonry-layout';
 
 export default {
   setup() {
@@ -30,6 +31,7 @@ export default {
     async function GetKeeps() {
       try {
         await keepsService.GetKeeps();
+        await SetMasonry();
       }
       catch (error) {
         Pop.error(error);
@@ -41,6 +43,10 @@ export default {
       } catch (error) {
         Pop.error(error)
       }
+    }
+    async function SetMasonry() {
+      let row = document.querySelector("[data-masonry]")
+      new masonry(row, { percentPosition: true })
     }
     return {
       keeps: computed(() => AppState.keeps),

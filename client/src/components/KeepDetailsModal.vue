@@ -1,11 +1,11 @@
 <template>
-    <div class="modal fade" id="keepDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="keepDetails" tabindex="-1" aria-labelledby="Keep Details Modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
                     <div v-if="activeKeep" class="container-fluid">
                         <section class="row justify-content-between">
-                            <div class="col-12 col-md-6 order-1 order-md-2 p-0 d-flex justify-content-end">
+                            <div class="col-12 col-md-6 order-1 order-md-2 p-0 img-display">
                                 <div class="img-container">
                                     <img :src="activeKeep.img" alt="Keep Image" class="keep-img">
                                     <div class="top-right">
@@ -47,7 +47,8 @@
                                     <div v-else>
                                         <p>You Have To Logged In To Save!</p>
                                     </div>
-                                    <RouterLink :to="{ name: 'Profile', params: { profileId: activeKeep.creator.id } }"
+                                    <RouterLink @click="CloseModal()"
+                                        :to="{ name: 'Profile', params: { profileId: activeKeep.creator.id } }"
                                         title="To User Profile">
                                         <div class="profile-card">
                                             <p class="mb-0 px-2 text-dark">{{ activeKeep.creator.name }}</p>
@@ -71,6 +72,8 @@ import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop';
 import { logger } from '../utils/Logger';
 import { vaultKeepsService } from '../services/VaultKeepsService'
+import { Modal } from 'bootstrap';
+
 export default {
     setup() {
         const editable = ref({})
@@ -93,6 +96,9 @@ export default {
                         Pop.error(error)
                     }
                 }
+            },
+            CloseModal() {
+                Modal.getOrCreateInstance('#keepDetails').hide()
             }
         }
     }
@@ -101,6 +107,11 @@ export default {
 
 
 <style lang="scss" scoped>
+.img-display {
+    display: flex;
+    justify-content: end;
+}
+
 .profile-card {
     display: flex;
     align-items: center;
@@ -163,10 +174,24 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
+    .img-container {
+        min-height: 18.5rem;
+        max-height: 30rem;
+        min-width: 23rem;
+        max-width: 23.275rem;
+    }
+
     .keep-img {
-        max-width: 25.75em;
-        border-top-left-radius: 0px;
-        border-bottom-right-radius: 8px;
+        min-height: 18.5rem;
+        max-height: 30rem;
+        min-width: 22.95rem;
+        max-width: 23.275rem;
+        border-bottom-right-radius: 0px;
+        border-top-left-radius: 8px;
+    }
+
+    .img-display {
+        justify-content: center;
     }
 }
 </style>

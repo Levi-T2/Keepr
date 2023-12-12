@@ -1,10 +1,13 @@
 <template>
-  <header class="sticky-top">
+  <header class="sticky-top navbar-desktop">
     <Neonav />
   </header>
   <main>
     <router-view />
   </main>
+  <footer class="sticky-bottom navbar-mobile">
+    <NavbarMobile />
+  </footer>
 
   <!-- Modals -->
   <KeepDetailsModal />
@@ -21,6 +24,7 @@ import KeepDetailsModal from './components/KeepDetailsModal.vue'
 import CreateKeepModal from './components/CreateKeepModal.vue'
 import CreateVaultModal from './components/CreateVaultModal.vue'
 import EditAccountModal from './components/EditAccountModal.vue'
+import NavbarMobile from './components/NavbarMobile.vue'
 
 export default {
   setup() {
@@ -28,7 +32,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Neonav, KeepDetailsModal, CreateKeepModal, CreateVaultModal, EditAccountModal }
+  components: { Neonav, KeepDetailsModal, CreateKeepModal, CreateVaultModal, EditAccountModal, NavbarMobile }
 }
 </script>
 <style lang="scss">
@@ -36,5 +40,19 @@ export default {
 
 :root {
   --main-height: calc(100vh - 32px - 64px);
+}
+
+.navbar-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar-desktop {
+    display: none;
+  }
+
+  .navbar-mobile {
+    display: block;
+  }
 }
 </style>

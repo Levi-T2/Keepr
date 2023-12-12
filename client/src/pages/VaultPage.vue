@@ -13,14 +13,16 @@
                 <p>Loading ...</p>
             </div>
         </section>
-        <section v-if="keeps.length" class="row">
-            <div v-for="keep in keeps" :key="keep.id" class="col-12 col-md-4">
+    </div>
+    <div class="container-fluid">
+        <section v-if="keeps.length" class="row" data-masonry>
+            <div v-for="keep in keeps" class="col-6 col-md-4 col-lg-3">
                 <KeepCard :keep="keep" />
             </div>
         </section>
-        <section v-else class="row">
+        <section v-else class="row justify-content-center">
             <div class="col-12">
-                <p>Loading ...</p>
+                <p>No Keeps In Vault </p>
             </div>
         </section>
     </div>
@@ -28,7 +30,7 @@
 
 
 <script>
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import Pop from '../utils/Pop';
@@ -36,10 +38,12 @@ import { logger } from '../utils/Logger';
 import { vaultsService } from '../services/VaultsService';
 import KeepCard from '../components/KeepCard.vue';
 import VaultHeader from '../components/VaultHeader.vue';
+import masonry from 'masonry-layout';
 
 export default {
     setup() {
         const route = useRoute();
+        const router = useRouter();
         onMounted(() => {
             GetKeepsInVault();
             GetVaultById();
@@ -49,9 +53,14 @@ export default {
                 AppState.keepsInVault = [];
                 const vaultId = route.params.vaultId;
                 await vaultsService.GetKeepsInVault(vaultId);
+                await SetMasonry();
             }
             catch (error) {
-                Pop.error(error);
+                if (error.response.data.includes('!')) {
+                    router.push({ name: 'Home' })
+                } else {
+                    Pop.error(error)
+                }
             }
         }
         async function GetVaultById() {
@@ -60,11 +69,20 @@ export default {
                 const vaultId = route.params.vaultId
                 await vaultsService.GetVaultById(vaultId)
             } catch (error) {
-                Pop.error(error)
+                if (error.response.data.includes('!')) {
+                    router.push({ name: 'Home' })
+                } else {
+                    Pop.error(error)
+                }
             }
+        }
+        async function SetMasonry() {
+            let row = document.querySelector("[data-masonry]")
+            new masonry(row, { percentPosition: true })
         }
         return {
             route,
+            router,
             keeps: computed(() => AppState.keepsInVault),
             vault: computed(() => AppState.activeVault),
         };

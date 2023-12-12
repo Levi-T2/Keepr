@@ -1,7 +1,8 @@
 <template>
     <section class="row">
-        <div v-if="account.id == vault.creatorId" class="delete-btn-position">
-            <button @click="DeleteVault(vault.id)" class="vault-btn"><i class="mdi mdi-close-thick"></i></button>
+        <div v-if="account.id == vault.creatorId" class="delete-btn-position" title="Delete Vault">
+            <button title="Delete Vault" @click="DeleteVault(vault.id)" class="vault-btn"><i
+                    class="mdi mdi-close-thick"></i></button>
         </div>
         <RouterLink class="p-1" :to="{ name: 'VaultDetails', params: { vaultId: vault.id } }" title="See Vault...">
             <div class="col-12 vault-card">

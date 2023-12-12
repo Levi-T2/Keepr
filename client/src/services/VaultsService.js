@@ -20,6 +20,7 @@ class VaultsService {
         const res = await api.post(`api/vaults`, vaultData)
         const newVault = new Vault(res.data)
         AppState.vaults.push(newVault)
+        return newVault;
     }
     async DeleteVault(vaultId) {
         const vaultIndex = AppState.vaults.findIndex((vault) => vault.id == vaultId)

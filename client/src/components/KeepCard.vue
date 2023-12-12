@@ -18,7 +18,8 @@
                     <p class="txt-bg">{{ keep.name }}</p>
                 </div>
                 <div v-if="keep.creator" role="button" class="bottom-right creator-card">
-                    <RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }" title="To Profile Page">
+                    <RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }"
+                        :title="keep.creator.name">
                         <img :src="keep.creator.picture" alt="Creator Avatar" class="creator-img">
                     </RouterLink>
                 </div>
@@ -110,6 +111,9 @@ export default {
     color: red;
     transition: ease-in-out 0.225s;
     border-bottom-left-radius: 17.5px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 0px;
+    padding: 0.35rem 0.35rem 0.5rem 0.5rem;
 }
 
 .btn-delete:hover {
@@ -125,7 +129,7 @@ export default {
 
 .keep-card:hover {
     transform: translateY(0.3em);
-    box-shadow: 1px 2px 6px 4px rgb(67, 67, 67);
+    box-shadow: 1px 2px 8px 6px rgb(70, 70, 70);
 }
 
 .creator-img {
@@ -143,12 +147,6 @@ export default {
     font-size: 1.25em;
     font-weight: bold;
 }
-
-// .keep-btn {
-//     position: absolute;
-//     z-index: 1;
-//     width: 3rem;
-// }
 
 // SECTION Css for img container
 
@@ -176,4 +174,15 @@ export default {
 }
 
 // !SECTION
+
+@media screen and (max-width: 768px) {
+    .txt-bg {
+        font-size: 0.85em;
+    }
+
+    .creator-img {
+        height: 2em;
+        width: 2em;
+    }
+}
 </style>
