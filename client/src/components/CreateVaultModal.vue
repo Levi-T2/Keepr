@@ -16,7 +16,7 @@
                         <div class="my-2">
                             <label for="vaultDescription" class="form-label">Description</label>
                             <textarea v-model="editable.description" type="text" class="form-control" id="vaultDescription"
-                                required :maxlength="3000" />
+                                required maxlength="3000" />
                         </div>
                         <div class="my-2">
                             <input v-model="editable.isPrivate" type="checkbox" class="btn-check" id="vaultPrivate"

@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <section v-if="keeps.length" class="row">
-      <div v-for="keep in keeps" class="col-12 col-md-4">
+      <div v-for="keep in keeps" class="col-12 col-md-4 col-lg-3">
         <KeepCard :keep="keep" />
       </div>
     </section>
@@ -50,24 +50,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-
-  .home-card {
-    width: clamp(500px, 50vw, 100%);
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>

@@ -3,8 +3,7 @@
         <section class="row justify-content-center">
             <div class="col-12 account-style">
                 <div class="img-container">
-                    <img src="https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y292ZXIlMjBpbWFnZXxlbnwwfHwwfHx8MA%3D%3D"
-                        alt="Cover Image" class="cover-img">
+                    <img :src="account.coverImg" alt="Cover Image" class="cover-img">
                     <div class="img-position">
                         <img :src="account.picture" alt="Account Picture" class="account-img">
                     </div>
@@ -13,6 +12,14 @@
                     <div class="text-center">
                         <p>{{ account.name }}</p>
                         <p v-if="account.email">Email: {{ account.email }}</p>
+                        <div v-if="account.bio">
+                            <p>{{ account.bio }}</p>
+                        </div>
+                        <div v-if="route.name == 'Account'">
+
+                            <button title="Edit Account" data-bs-toggle="modal" data-bs-target="#editAccount"
+                                class="btn btn-primary rounded-circle"><i class="mdi mdi-pencil"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>

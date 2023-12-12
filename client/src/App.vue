@@ -10,6 +10,7 @@
   <KeepDetailsModal />
   <CreateKeepModal />
   <CreateVaultModal />
+  <EditAccountModal />
 </template>
 
 <script>
@@ -19,6 +20,7 @@ import Neonav from './components/Neonav.vue'
 import KeepDetailsModal from './components/KeepDetailsModal.vue'
 import CreateKeepModal from './components/CreateKeepModal.vue'
 import CreateVaultModal from './components/CreateVaultModal.vue'
+import EditAccountModal from './components/EditAccountModal.vue'
 
 export default {
   setup() {
@@ -26,7 +28,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Neonav, KeepDetailsModal, CreateKeepModal, CreateVaultModal }
+  components: { Neonav, KeepDetailsModal, CreateKeepModal, CreateVaultModal, EditAccountModal }
 }
 </script>
 <style lang="scss">
@@ -34,12 +36,5 @@ export default {
 
 :root {
   --main-height: calc(100vh - 32px - 64px);
-}
-
-
-footer {
-  display: grid;
-  place-content: center;
-  height: 32px;
 }
 </style>

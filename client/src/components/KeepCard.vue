@@ -6,8 +6,8 @@
                     class="img-fluid rounded">
                 <div class="top-right">
                     <div v-if="account.id == keep.creatorId && route.name != 'VaultDetails'">
-                        <button title="Delete Keep" @click="DeleteKeep(keep.id)" class="btn btn-danger"><i
-                                class="mdi mdi-close"></i></button>
+                        <button title="Delete Keep" @click="DeleteKeep(keep.id)" class="btn btn-delete"><i
+                                class="mdi mdi-close-thick"></i></button>
                     </div>
                     <div v-if="route.name == 'VaultDetails'">
                         <button @click="DeleteVaultKeep(keep.vaultKeepId)" title="Remove Keep From Vault"
@@ -17,7 +17,7 @@
                 <div role="button" @click="OpenKeepModal(keep.id)" class="bottom-left">
                     <p class="txt-bg">{{ keep.name }}</p>
                 </div>
-                <div v-if="keep.creator" role="button" class="bottom-right">
+                <div v-if="keep.creator" role="button" class="bottom-right creator-card">
                     <RouterLink :to="{ name: 'Profile', params: { profileId: keep.creator.id } }" title="To Profile Page">
                         <img :src="keep.creator.picture" alt="Creator Avatar" class="creator-img">
                     </RouterLink>
@@ -31,14 +31,11 @@
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
-import { Keep } from '../models/Keep';
 import Pop from '../utils/Pop';
 import { Modal } from 'bootstrap';
 import { logger } from '../utils/Logger';
 import { keepsService } from '../services/KeepsService';
 import { RouterLink, useRoute } from 'vue-router';
-import { Account } from '../models/Account';
-import { userService } from '../services/UserService';
 import { vaultKeepsService } from '../services/VaultKeepsService';
 import { KeepInVault } from '../models/KeepInVault';
 
@@ -95,6 +92,31 @@ export default {
 
 
 <style lang="scss" scoped>
+.creator-card {
+    background-color: rgba(12, 12, 12, 0.267);
+    backdrop-filter: blur(12px);
+    padding: 0.25rem;
+    border-radius: 25px;
+    transition: ease-in-out 0.225s;
+}
+
+.creator-card:hover {
+    background-color: rgb(50, 50, 50);
+}
+
+.btn-delete {
+    background-color: rgba(12, 12, 12, 0.267);
+    backdrop-filter: blur(12px);
+    color: red;
+    transition: ease-in-out 0.225s;
+    border-bottom-left-radius: 17.5px;
+}
+
+.btn-delete:hover {
+    background-color: red;
+    color: white;
+}
+
 .keep-card {
     box-shadow: 1px 2px 6px 4px rgb(133, 133, 133);
     border-radius: 6px;
@@ -102,7 +124,7 @@ export default {
 }
 
 .keep-card:hover {
-    transform: translateY(0.25em);
+    transform: translateY(0.3em);
     box-shadow: 1px 2px 6px 4px rgb(67, 67, 67);
 }
 

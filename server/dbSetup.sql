@@ -12,6 +12,8 @@ CREATE TABLE
 
 SELECT * FROM accounts;
 
+ALTER TABlE accounts ADD bio VARCHAR(3000);
+
 -- Keep Commands
 
 CREATE TABLE
