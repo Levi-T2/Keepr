@@ -4,8 +4,15 @@
             <div class="img-container keep-card">
                 <img role="button" @click="OpenKeepModal(keep.id)" :src="keep.img" alt="Keep Image"
                     class="img-fluid rounded">
-                <div v-if="account.id == keep.creatorId" class="top-right">
-                    <button @click="DeleteKeep(keep.id)" class="btn btn-danger"><i class="mdi mdi-close"></i></button>
+                <div class="top-right">
+                    <div v-if="account.id == keep.creatorId && route.name != 'VaultDetails'">
+                        <button title="Delete Keep" @click="DeleteKeep(keep.id)" class="btn btn-danger"><i
+                                class="mdi mdi-close"></i></button>
+                    </div>
+                    <div v-if="route.name == 'VaultDetails'">
+                        <button @click="DeleteVaultKeep(keep.vaultKeepId)" title="Remove Keep From Vault"
+                            class="btn btn-danger"><i class="mdi mdi-close"></i></button>
+                    </div>
                 </div>
                 <div role="button" @click="OpenKeepModal(keep.id)" class="bottom-left">
                     <p class="txt-bg">{{ keep.name }}</p>
@@ -33,14 +40,16 @@ import { RouterLink, useRoute } from 'vue-router';
 import { Account } from '../models/Account';
 import { userService } from '../services/UserService';
 import { vaultKeepsService } from '../services/VaultKeepsService';
+import { KeepInVault } from '../models/KeepInVault';
 
 export default {
     props: {
-        keep: { type: Keep, required: true }
+        keep: { type: KeepInVault, required: true }
     },
     setup() {
         const route = useRoute()
         return {
+            route,
             account: computed(() => AppState.account),
             async OpenKeepModal(keepId) {
                 try {
@@ -59,11 +68,6 @@ export default {
                         return;
                     }
                     else {
-                        // const vaultId = route.params.vaultId
-                        // const endpointUrl = `/vault/${vaultId}`
-                        // if (route.path == endpointUrl) {
-                        //     await vaultKeepsService.RemoveVaultKeep()
-                        // } 
                         await keepsService.DeleteKeep(keepId);
                     }
                 }
@@ -71,7 +75,18 @@ export default {
                     Pop.error(error);
                 }
             },
-            // keepCreatorImg: computed(() => `url(${props.keep.creator.picture})`)
+            async DeleteVaultKeep(vaultKeepId) {
+                try {
+                    const wantsToRemove = await Pop.confirm(`Are you sure you want to remove this from your vault?`)
+                    if (!wantsToRemove) {
+                        return
+                    } else {
+                        await vaultKeepsService.DeleteVaultKeep(vaultKeepId)
+                    }
+                } catch (error) {
+                    Pop.error(error)
+                }
+            }
         };
     },
     components: { RouterLink }
@@ -80,14 +95,6 @@ export default {
 
 
 <style lang="scss" scoped>
-// .keep-img {
-//     height: auto;
-//     width: 22.5em;
-//     background-position: center;
-//     background-size: cover;
-//     border-radius: 7px;
-// }
-
 .keep-card {
     box-shadow: 1px 2px 6px 4px rgb(133, 133, 133);
     border-radius: 6px;
