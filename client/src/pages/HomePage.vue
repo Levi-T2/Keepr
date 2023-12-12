@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import Pop from '../utils/Pop';
 import { keepsService } from '../services/KeepsService';
 import { AppState } from '../AppState';
@@ -24,9 +24,9 @@ import masonry from 'masonry-layout';
 
 export default {
   setup() {
+    const watchableKeeps = computed(() => AppState.keeps.length)
     onMounted(() => {
       GetKeeps();
-      GetMyVaults();
     });
     async function GetKeeps() {
       try {
@@ -37,17 +37,21 @@ export default {
         Pop.error(error);
       }
     }
-    async function GetMyVaults() {
-      try {
-        await accountService.GetMyVaults();
-      } catch (error) {
-        Pop.error(error)
-      }
-    }
+    // NOTE moved to auth service
+    // async function GetMyVaults() {
+    //   try {
+    //     await accountService.GetMyVaults();
+    //   } catch (error) {
+    //     Pop.error(error)
+    //   }
+    // }
     async function SetMasonry() {
       let row = document.querySelector("[data-masonry]")
       new masonry(row, { percentPosition: true })
     }
+    watch(watchableKeeps, () => {
+      SetMasonry()
+    }, { immediate: true })
     return {
       keeps: computed(() => AppState.keeps),
     };

@@ -27,6 +27,10 @@ class VaultsService {
         const res = await api.delete(`api/vaults/${vaultId}`)
         AppState.vaults.splice(vaultIndex, 1)
     }
+    async EditVault(vaultId, editData) {
+        const res = await api.put(`api/vaults/${vaultId}`, editData)
+        AppState.activeVault = new Vault(res.data)
+    }
 }
 
 export const vaultsService = new VaultsService()

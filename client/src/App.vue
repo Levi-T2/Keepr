@@ -14,6 +14,7 @@
   <CreateKeepModal />
   <CreateVaultModal />
   <EditAccountModal />
+  <EditVaultModal />
 </template>
 
 <script>
@@ -25,6 +26,7 @@ import CreateKeepModal from './components/CreateKeepModal.vue'
 import CreateVaultModal from './components/CreateVaultModal.vue'
 import EditAccountModal from './components/EditAccountModal.vue'
 import NavbarMobile from './components/NavbarMobile.vue'
+import EditVaultModal from './components/EditVaultModal.vue'
 
 export default {
   setup() {
@@ -32,7 +34,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Neonav, KeepDetailsModal, CreateKeepModal, CreateVaultModal, EditAccountModal, NavbarMobile }
+  components: { Neonav, KeepDetailsModal, CreateKeepModal, CreateVaultModal, EditAccountModal, NavbarMobile, EditVaultModal }
 }
 </script>
 <style lang="scss">

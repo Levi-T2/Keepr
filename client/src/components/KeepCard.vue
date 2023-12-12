@@ -157,8 +157,8 @@ export default {
 
 .bottom-left {
     position: absolute;
-    bottom: -5px;
-    left: 12px;
+    bottom: -8px;
+    left: 8px;
 }
 
 .bottom-right {

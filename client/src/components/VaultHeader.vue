@@ -1,9 +1,20 @@
 <template>
     <div class="col-12 vault-style mt-2">
+        <div v-if="vault.creatorId == account.id">
+            <button data-bs-toggle="modal" data-bs-target="#editVault" title="Edit Vault"
+                class="btn btn-primary btn-edit"><i class="mdi mdi-pencil"></i></button>
+        </div>
         <div class="txt-bg">
-            <p class="fw-bold mb-0">{{ vault.name }}</p>
+            <p class="fw-bold mb-0">{{ vault.name }}
+                <span v-if="vault.isPrivate == true">
+                    <i class="mdi mdi-lock"></i>
+                </span>
+            </p>
             <p class="mb-0">by: {{ vault.creator.name }}</p>
         </div>
+    </div>
+    <div class="col-12 my-3 text-center">
+        <p class="mb-0">{{ vault.description }}</p>
     </div>
 </template>
 
@@ -19,6 +30,7 @@ export default {
     setup(props) {
         return {
             vaultImg: computed(() => `url(${props.vault.img})`),
+            account: computed(() => AppState.account)
         }
     }
 };
@@ -26,6 +38,13 @@ export default {
 
 
 <style lang="scss" scoped>
+.btn-edit {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
 .vault-style {
     background-image: v-bind(vaultImg);
     height: 16rem;
@@ -34,8 +53,9 @@ export default {
     background-size: cover;
     border-radius: 10px;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .txt-bg {
@@ -43,8 +63,7 @@ export default {
     backdrop-filter: blur(12px);
     color: white;
     padding: 0.25rem;
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
+    border-radius: 12px;
     font-size: 1.25em;
     text-align: center;
 }
