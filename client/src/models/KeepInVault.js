@@ -1,6 +1,6 @@
 export class KeepInVault {
     constructor(data) {
-        this.keepId = data.id
+        this.id = data.id
         this.vaultKeepId = data.vaultKeepId
         this.accountId = data.accountId
         this.creatorId = data.creatorId

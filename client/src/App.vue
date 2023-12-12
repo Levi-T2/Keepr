@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="sticky-top">
     <Neonav />
   </header>
   <main>

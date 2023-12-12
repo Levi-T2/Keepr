@@ -36,7 +36,6 @@
                     <p class="mb-0 fs-3">Keeps</p>
                 </div>
                 <div v-for="keep in keeps" :key="keep.id" class="col-12 col-md-4 col-lg-3 mt-2">
-                    <!-- <AccountKeeps :keep="keep" /> -->
                     <KeepCard :keep="keep" />
                 </div>
             </section>

@@ -2,12 +2,12 @@
     <nav class="nav-style">
         <div class="container-fluid">
             <section class="row align-items-center">
-                <div class="col-2">
+                <div class="col-1">
                     <RouterLink :to="{ name: 'Home' }">
                         <p type="button" role="button" class="mb-0">Home</p>
                     </RouterLink>
                 </div>
-                <div class="col-2">
+                <div v-if="Object.keys(account).length" class="col-1">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -24,7 +24,7 @@
                 <div class="col-6 text-center">
                     <p class="mb-0">Keepr</p>
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                     <div id="loginComp" class="d-flex justify-content-end">
                         <Login />
                     </div>
@@ -37,12 +37,13 @@
 
 <script>
 import { AppState } from '../AppState';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import Login from './Login.vue';
 
 export default {
     setup() {
         return {
+            account: computed(() => AppState.account)
         };
     },
     components: { Login }

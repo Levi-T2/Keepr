@@ -10,6 +10,10 @@ class KeepsService {
         AppState.keeps = newKeeps
         logger.log(`[KEEPS SERVICE] Keeps In AppState =>`, AppState.keeps)
     }
+    async GetKeepById(keepId) {
+        const res = await api.get(`api/keeps/${keepId}`)
+        AppState.activeKeep = new Keep(res.data)
+    }
     async CreateKeep(keepData) {
         const res = await api.post(`api/keeps`, keepData)
         const newKeep = new Keep(res.data)
@@ -20,6 +24,7 @@ class KeepsService {
         const res = await api.delete(`api/keeps/${keepId}`)
         AppState.keeps.splice(keepIndex, 1)
         AppState.keepsForUser.splice(keepIndex, 1)
+        AppState.keepsInVault.splice(keepIndex, 1)
     }
 }
 

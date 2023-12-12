@@ -19,11 +19,13 @@ import Pop from '../utils/Pop';
 import { keepsService } from '../services/KeepsService';
 import { AppState } from '../AppState';
 import KeepCard from '../components/KeepCard.vue';
+import { accountService } from '../services/AccountService';
 
 export default {
   setup() {
     onMounted(() => {
       GetKeeps();
+      GetMyVaults();
     });
     async function GetKeeps() {
       try {
@@ -31,6 +33,13 @@ export default {
       }
       catch (error) {
         Pop.error(error);
+      }
+    }
+    async function GetMyVaults() {
+      try {
+        await accountService.GetMyVaults();
+      } catch (error) {
+        Pop.error(error)
       }
     }
     return {

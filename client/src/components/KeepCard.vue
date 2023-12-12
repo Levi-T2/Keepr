@@ -2,11 +2,12 @@
     <section class="row">
         <div class="col-12 p-2">
             <div class="img-container keep-card">
-                <img role="button" @click="OpenKeepModal(keep)" :src="keep.img" alt="Keep Image" class="img-fluid rounded">
-                <div v-if="account.id == keep.creatorId" @click="DeleteKeep(keep.id)" class="top-right">
-                    <button class="btn btn-danger"><i class="mdi mdi-close"></i></button>
+                <img role="button" @click="OpenKeepModal(keep.id)" :src="keep.img" alt="Keep Image"
+                    class="img-fluid rounded">
+                <div v-if="account.id == keep.creatorId" class="top-right">
+                    <button @click="DeleteKeep(keep.id)" class="btn btn-danger"><i class="mdi mdi-close"></i></button>
                 </div>
-                <div role="button" @click="OpenKeepModal(keep)" class="bottom-left">
+                <div role="button" @click="OpenKeepModal(keep.id)" class="bottom-left">
                     <p class="txt-bg">{{ keep.name }}</p>
                 </div>
                 <div v-if="keep.creator" role="button" class="bottom-right">
@@ -28,20 +29,23 @@ import Pop from '../utils/Pop';
 import { Modal } from 'bootstrap';
 import { logger } from '../utils/Logger';
 import { keepsService } from '../services/KeepsService';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 import { Account } from '../models/Account';
 import { userService } from '../services/UserService';
+import { vaultKeepsService } from '../services/VaultKeepsService';
+
 export default {
     props: {
         keep: { type: Keep, required: true }
     },
     setup() {
+        const route = useRoute()
         return {
             account: computed(() => AppState.account),
-            OpenKeepModal(keepData) {
+            async OpenKeepModal(keepId) {
                 try {
                     AppState.activeKeep = null;
-                    AppState.activeKeep = keepData;
+                    await keepsService.GetKeepById(keepId)
                     Modal.getOrCreateInstance("#keepDetails").show();
                 }
                 catch (error) {
@@ -55,6 +59,11 @@ export default {
                         return;
                     }
                     else {
+                        // const vaultId = route.params.vaultId
+                        // const endpointUrl = `/vault/${vaultId}`
+                        // if (route.path == endpointUrl) {
+                        //     await vaultKeepsService.RemoveVaultKeep()
+                        // } 
                         await keepsService.DeleteKeep(keepId);
                     }
                 }

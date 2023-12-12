@@ -46,8 +46,8 @@ export default {
         });
         async function GetKeepsInVault() {
             try {
-                const vaultId = route.params.vaultId;
                 AppState.keepsInVault = [];
+                const vaultId = route.params.vaultId;
                 await vaultsService.GetKeepsInVault(vaultId);
             }
             catch (error) {
@@ -56,8 +56,8 @@ export default {
         }
         async function GetVaultById() {
             try {
-                const vaultId = route.params.vaultId
                 AppState.activeVault = null
+                const vaultId = route.params.vaultId
                 await vaultsService.GetVaultById(vaultId)
             } catch (error) {
                 Pop.error(error)
