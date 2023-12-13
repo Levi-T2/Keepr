@@ -61,6 +61,7 @@ export default {
     font-family: 'Kanit', sans-serif;
     margin-bottom: 0%;
     font-size: 1.375em;
+    text-shadow: 2.25px 2px 1.25px rgba(255, 255, 255, 0.71);
 }
 
 .create-btn {

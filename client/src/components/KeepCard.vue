@@ -2,7 +2,7 @@
     <section class="row">
         <div class="col-12 p-2">
             <div class="img-container keep-card">
-                <img role="button" @click="OpenKeepModal(keep.id)" :src="keep.img" alt="Keep Image"
+                <img title="See Keep Details" role="button" @click="OpenKeepModal(keep.id)" :src="keep.img" alt="Keep Image"
                     class="img-fluid rounded">
                 <div class="top-right">
                     <div v-if="account.id == keep.creatorId && route.name != 'VaultDetails'">
@@ -14,7 +14,7 @@
                             class="btn btn-delete"><i class="mdi mdi-close-thick"></i></button>
                     </div>
                 </div>
-                <div role="button" @click="OpenKeepModal(keep.id)" class="bottom-left">
+                <div title="See Keep Details" role="button" @click="OpenKeepModal(keep.id)" class="bottom-left">
                     <p class="txt-bg">{{ keep.name }}</p>
                 </div>
                 <div v-if="keep.creator" role="button" class="bottom-right creator-card">
@@ -31,10 +31,9 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed } from 'vue';
 import Pop from '../utils/Pop';
 import { Modal } from 'bootstrap';
-import { logger } from '../utils/Logger';
 import { keepsService } from '../services/KeepsService';
 import { RouterLink, useRoute } from 'vue-router';
 import { vaultKeepsService } from '../services/VaultKeepsService';

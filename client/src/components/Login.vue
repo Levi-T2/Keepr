@@ -56,6 +56,11 @@ export default {
 <style lang="scss" scoped>
 .img-border {
   border: 1.5px solid rgba(12, 12, 12, 0.267);
-  box-shadow: 1px 2px 5.5px 1.5px rgb(85, 85, 85);
+  box-shadow: 1px 2px 5.25px 1.45px rgb(85, 85, 85);
+  transition: ease-in-out 0.275s;
+}
+
+.img-border:hover {
+  box-shadow: 1px 2px 5.25px 1.45px var(--bs-success);
 }
 </style>
