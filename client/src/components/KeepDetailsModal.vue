@@ -28,7 +28,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-around align-items-center w-100">
-                                    <div v-if="Object.keys(account).length" class="form-width">
+                                    <div v-if="Object.keys(account).length" class="form-style">
                                         <form @submit.prevent="SaveToVault(activeKeep.id)">
                                             <div class="d-flex">
                                                 <select v-model="editable.vaultId" required class="form-select">
@@ -37,10 +37,10 @@
                                                         {{ vault.name }}
                                                     </option>
                                                 </select>
-                                                <div class="px-2">
-                                                    <button title="Save To Vault" type="submit" class="btn btn-primary"><i
-                                                            class="mdi mdi-content-save"></i></button>
-                                                </div>
+
+                                                <button title="Save To Vault" type="submit" class="btn btn-save"><i
+                                                        class="mdi mdi-content-save"></i></button>
+
                                             </div>
                                         </form>
                                     </div>
@@ -88,7 +88,7 @@ export default {
                     vaultKeepData.keepId = keepId
                     await vaultKeepsService.CreateVaultKeep(vaultKeepData)
                     editable.value = {}
-                    Pop.toast(`Keep Saved To Vault`)
+                    Pop.success(`Keep Saved To Vault`)
                 } catch (error) {
                     if (error.response.data.includes('Duplicate')) {
                         Pop.toast(`You've already saved that keep to that vault.`)
@@ -107,6 +107,29 @@ export default {
 
 
 <style lang="scss" scoped>
+.form-select {
+    padding: 0.375rem 4.5rem 0.375rem 2rem;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.btn-save {
+    background-color: blue;
+    color: white;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: ease-in-out 0.225s;
+}
+
+.btn-save:hover {
+    background-color: lightcoral;
+    color: black;
+}
+
 .img-display {
     display: flex;
     justify-content: end;
@@ -125,7 +148,7 @@ export default {
     border: 2px solid gainsboro;
 }
 
-.form-width {
+.form-style {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -192,6 +215,10 @@ export default {
 
     .img-display {
         justify-content: center;
+    }
+
+    .form-select {
+        padding: 0.375rem 3.5rem 0.375rem 1rem;
     }
 }
 </style>

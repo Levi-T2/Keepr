@@ -71,7 +71,6 @@ import { computed, onMounted } from 'vue';
 import { Account } from '../models/Account';
 import AccountVaults from '../components/AccountVaults.vue'
 import Pop from '../utils/Pop';
-import { logger } from '../utils/Logger';
 import { useRoute } from 'vue-router';
 import { userService } from '../services/UserService'
 import KeepCard from './KeepCard.vue';

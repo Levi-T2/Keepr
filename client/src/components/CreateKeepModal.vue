@@ -42,6 +42,7 @@ import Pop from '../utils/Pop';
 import { logger } from '../utils/Logger';
 import { Modal } from 'bootstrap';
 import { keepsService } from '../services/KeepsService';
+import masonry from 'masonry-layout';
 
 export default {
     setup() {
@@ -54,6 +55,9 @@ export default {
                     await keepsService.CreateKeep(keepData)
                     Modal.getOrCreateInstance("#createKeep").hide()
                     editable.value = {}
+                    // NOTE this needs to be ran to redo the masonry when data is added.
+                    let row = document.querySelector("[data-masonry]")
+                    new masonry(row, { percentPosition: true, })
                 } catch (error) {
                     Pop.error(error)
                 }

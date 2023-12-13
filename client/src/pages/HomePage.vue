@@ -24,19 +24,26 @@ import masonry from 'masonry-layout';
 
 export default {
   setup() {
-    const watchableKeeps = computed(() => AppState.keeps.length)
+    // const watchableKeeps = computed(() => AppState.keeps.length)
     onMounted(() => {
       GetKeeps();
     });
     async function GetKeeps() {
       try {
         await keepsService.GetKeeps();
-        await SetMasonry();
+        window.onload = await SetMasonry()
       }
       catch (error) {
         Pop.error(error);
       }
     }
+    async function SetMasonry() {
+      let row = document.querySelector("[data-masonry]")
+      new masonry(row, { percentPosition: true, })
+    }
+    // watch(watchableKeeps, () => {
+    //   SetMasonry()
+    // }, { immediate: true })
     // NOTE moved to auth service
     // async function GetMyVaults() {
     //   try {
@@ -45,13 +52,6 @@ export default {
     //     Pop.error(error)
     //   }
     // }
-    async function SetMasonry() {
-      let row = document.querySelector("[data-masonry]")
-      new masonry(row, { percentPosition: true })
-    }
-    watch(watchableKeeps, () => {
-      SetMasonry()
-    }, { immediate: true })
     return {
       keeps: computed(() => AppState.keeps),
     };

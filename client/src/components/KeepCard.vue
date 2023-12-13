@@ -11,7 +11,7 @@
                     </div>
                     <div v-if="route.name == 'VaultDetails'">
                         <button @click="DeleteVaultKeep(keep.vaultKeepId)" title="Remove Keep From Vault"
-                            class="btn btn-danger"><i class="mdi mdi-close"></i></button>
+                            class="btn btn-delete"><i class="mdi mdi-close-thick"></i></button>
                     </div>
                 </div>
                 <div role="button" @click="OpenKeepModal(keep.id)" class="bottom-left">

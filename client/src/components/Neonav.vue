@@ -10,8 +10,8 @@
                 </div>
                 <div class="col-1">
                     <div v-if="Object.keys(account).length" class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button title="See Create Options" class="btn create-btn dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Create
                         </button>
                         <ul class="dropdown-menu">
@@ -63,13 +63,26 @@ export default {
     font-size: 1.375em;
 }
 
+.create-btn {
+    background-color: lightgoldenrodyellow;
+    border: 2px solid rgba(0, 0, 0, 0);
+    transition: ease-in-out 0.255s;
+    border-radius: 20px;
+}
+
+.create-btn:hover {
+    border: 2px solid gainsboro;
+    background-color: rgb(36, 36, 34);
+    color: white;
+}
+
 .keepr-img {
     width: 1.725em;
     height: 1.725em;
 }
 
 .home-btn {
-    background-color: rgb(220, 210, 190);
+    background-color: lightgoldenrodyellow;
     color: black;
     text-align: center;
     padding: 0.25rem;
@@ -79,12 +92,13 @@ export default {
 }
 
 .home-btn:hover {
-    background-color: rgb(156, 144, 122);
+    background-color: rgb(36, 36, 34);
     color: white;
 }
 
 .nav-style {
-    background-color: rgb(244, 235, 217);
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(158, 148, 233, 1) 100%);
     border-bottom: solid 2px black;
 }
 </style>

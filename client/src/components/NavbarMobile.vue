@@ -10,9 +10,8 @@
                     </RouterLink>
                 </div>
                 <div v-if="Object.keys(account).length" class="col-3">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary d-flex" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                    <div class="dropup-center dropup">
+                        <button class="btn create-btn d-flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Create <i class="mdi mdi-arrow-up-thick"></i>
                         </button>
                         <ul class="dropdown-menu">
@@ -51,6 +50,18 @@ export default {
 
 
 <style lang="scss" scoped>
+.create-btn {
+    background-color: lightgoldenrodyellow;
+    border: 2px solid rgba(0, 0, 0, 0);
+    transition: ease-in-out 0.255s;
+}
+
+.create-btn:hover {
+    border: 2px solid gainsboro;
+    background-color: rgb(36, 36, 34);
+    color: white;
+}
+
 .keepr-txt {
     font-family: 'Kanit', sans-serif;
     margin-bottom: 0%;
@@ -63,7 +74,7 @@ export default {
 }
 
 .home-btn {
-    background-color: rgb(220, 210, 190);
+    background-color: lightgoldenrodyellow;
     color: black;
     text-align: center;
     padding: 0.25rem;
@@ -78,7 +89,8 @@ export default {
 }
 
 .nav-style {
-    background-color: rgb(244, 235, 217);
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(158, 148, 233, 1) 100%);
     border-top: solid 2px black;
 }
 </style>
