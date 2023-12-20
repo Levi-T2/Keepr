@@ -7,10 +7,6 @@
                     <div class="img-position">
                         <img :src="account.picture" alt="Account Picture" class="account-img">
                     </div>
-                    <div v-if="route.name == 'Account'" class="edit-position">
-                        <button title="Edit Account" data-bs-toggle="modal" data-bs-target="#editAccount"
-                            class="btn btn-primary rounded-circle"><i class="mdi mdi-pencil"></i></button>
-                    </div>
                 </div>
                 <div v-else class="img-container">
                     <img src="https://iwritingsolutions.com/wp-content/uploads/2022/05/d382f0a59d2d2ec86c613a04f9222ecd.jpg"
@@ -26,6 +22,10 @@
                         <p v-if="account.email">Email: {{ account.email }}</p>
                         <div v-if="account.bio">
                             <p>{{ account.bio }}</p>
+                        </div>
+                        <div v-if="route.name == 'Account'">
+                            <button title="Edit Account" data-bs-toggle="modal" data-bs-target="#editAccount"
+                                class="btn btn-primary rounded-pill">Edit <i class="mdi mdi-pencil"></i></button>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@ export default {
 
 .edit-position {
     position: absolute;
-    bottom: -14.5px;
+    bottom: 4.5px;
     right: 12px;
 }
 
