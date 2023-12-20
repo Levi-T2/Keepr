@@ -30,7 +30,7 @@ COPY server ./
 COPY --from=client-builder /app/client/docs /app/server/wwwroot
 
 # Build and publish a release
-RUN dotnet publish Keepr.sln Release -o out
+RUN dotnet publish Keepr.sln -c Release -o out
 
 # Start runtime image
 FROM mcr.microsoft.com/dotnet/sdk:8.0
