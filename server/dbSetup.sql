@@ -15,6 +15,8 @@ SELECT * FROM accounts;
 
 ALTER TABlE accounts ADD bio VARCHAR(3000);
 
+ALTER TABLE accounts ADD coverImg VARCHAR(1000);
+
 -- Keep Commands
 
 CREATE TABLE
